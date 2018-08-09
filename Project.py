@@ -6,7 +6,8 @@ alpha = input ("Alpha: ")
 beta = input ("Beta: ")
 gamma = input ("Gamma: ")
 
-while true:
+#comment
+while True:
 	print ("Do you want to generate rotation matrix (G) or rotate the cloud (R)?")
 	choise = input ("Type G or R: ")
 
