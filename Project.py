@@ -1,6 +1,6 @@
 print ("Welcome to point cloud rotator.")
 print ("I can make a new text file with coordinates of rotated point cloud or generate file with rotation matrix for CloudCompare.")
-print ("First of all type in Euler coordinates you are given.")
+print ("First of all type in Euler angles you are given.")
 
 alpha = input ("Alpha: ")
 beta = input ("Beta: ")
