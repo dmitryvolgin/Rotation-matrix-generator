@@ -4,7 +4,13 @@ print ("Welcome to point cloud rotator.")
 print ("I can make a new text file with coordinates of rotated point cloud or generate file with rotation matrix for CloudCompare.")
 print ("First of all type in Euler angles in degrees and scanner coordinates you are given.")
 
+
 while True:
+	print ("Do you want to continue?")
+	heh = input ("Y/N: ")
+	if heh == "n" or heh == "N":
+		break
+
 	alpha = radians (float (input ("Alpha: ")))
 	beta = radians (float (input ("Beta: ")))
 	gamma = radians (float (input ("Gamma: ")))
@@ -37,11 +43,20 @@ while True:
 		choise = input ("Type in G or R: ")
 
 		if choise == "G" or choise == "g":
-			print ("Generating")
+
+			matrix = str(a11)+" "+str(a12)+" "+str(a13)+" "+str(a14)+"\n"+str(a21)+" "+str(a22)+" "+str(a23)+" "+str(a24)+"\n"+str(a31)+" "+str(a32)+" "+str(a33)+" "+str(a34)+"\n"+str(a41)+" "+str(a42)+" "+str(a43)+" "+str(a44)
+			print ("Enter the name for the matrix file.")
+			matrix_name = input (": ")
+			print ("Generating...")
+
+			with open (matrix_name, "w") as matrix_file:
+				matrix_file.write (matrix)
+
+
 			break
 		elif choise == "R" or choise == "r":
-			print ("Rotating")
+			print ("Rotating...")
 			break
 		else:
-			print ("Incorrect input")
+			print ("Incorrect input!")
 			continue
