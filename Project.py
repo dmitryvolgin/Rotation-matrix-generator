@@ -1,5 +1,12 @@
 from math import cos , sin , radians
 
+"""
+Исправить полный импорт DECIMAL 
+Он нужен только для ограничения количесва символов после запятой при записи повёрнутого облака в файл
+"""
+
+from decimal import*
+
 print ("Welcome to point cloud rotator.")
 print ("I can make a new text file with coordinates of rotated point cloud or generate file with rotation matrix for CloudCompare.")
 print ("First of all type in Euler angles in degrees and scanner coordinates you are given.")
@@ -17,9 +24,9 @@ while True:
 	beta = radians (float (input ("Beta: ")))
 	gamma = radians (float (input ("Gamma: ")))
 
-	deltaX = input ("x: ")
-	deltaY = input ("y: ")
-	deltaZ = input ("z: ")
+	deltaX = float (input ("x: "))
+	deltaY = float (input ("y: "))
+	deltaZ = float (input ("z: "))
 
 	a11 = (cos(beta)*cos(gamma))
 	a21 = (sin(alpha)*sin(beta)*cos(gamma) + cos(alpha)*sin(gamma))
@@ -63,9 +70,42 @@ while True:
 
 		elif choise == "R" or choise == "r":
 			print ("Enter the path to txt file with your point cloud")
-			initial_cloud = input (": ")
+			path = input (": ")
 			print ("Rotating...")
+
+			with open (path, "r") as initial_cloud:
+				with open (path + "_ROTATED.txt", "w") as rotated_cloud:
+					counter = 0
+					for line in initial_cloud:
+						coords = line.split(" ")
+						x = float(coords[0])
+						y = float(coords[1])
+						z = float(coords[2])
+						attribute = coords[3]
+						# rotating
+						x1 = x*a11 + y*a12 + z*a13
+						y1 = x*a21 + y*a22 + z*a23
+						z1 = x*a31 + y*a32 + z*a33
+						# translating
+						x2 = x1 + deltaX
+						y2 = y1 + deltaY
+						z2 = z1 + deltaZ
+						# writing
+						new_line = str('{0:.5f}'.format(x2))+" "+str('{0:.5f}'.format(y2))+" "+str('{0:.5f}'.format(z2))+" "+attribute
+						rotated_cloud.write(new_line)
+						# Loading
+						counter+=1
+
+						"""
+						Добавить счёт загрузки
+						Сначала надо посчитать количесво строк в файле, а потом вычислить (counter/кол-во строк)
+						Выводить 20, 40, 60, 80, 100%
+						"""
+
+			print(str(counter)+" points processed")
+			print("Finished")
 			break
+		
 		else:
 			print ("Incorrect input!")
 			continue
