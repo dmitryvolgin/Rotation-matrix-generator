@@ -6,10 +6,12 @@ print ("First of all type in Euler angles in degrees and scanner coordinates you
 
 
 while True:
-	print ("Do you want to continue?")
-	heh = input ("Y/N: ")
-	if heh == "n" or heh == "N":
+	cont = input ("Continue? (Y/N): ")
+	if cont == "n" or cont == "N":
 		break
+	elif not cont == "y" and not cont == "Y":
+		print ("Incorrect input!\nType in Y or N")
+		continue
 
 	alpha = radians (float (input ("Alpha: ")))
 	beta = radians (float (input ("Beta: ")))
@@ -49,12 +51,19 @@ while True:
 			matrix_name = input (": ")
 			print ("Generating...")
 
+			"""
+			Записывает файл в директорию C:/Users/dmitr/(matrix)
+			Исправить!
+			"""
+
 			with open (matrix_name, "w") as matrix_file:
 				matrix_file.write (matrix)
-
-
+				print ("Generation completed!")
 			break
+
 		elif choise == "R" or choise == "r":
+			print ("Enter the path to txt file with your point cloud")
+			initial_cloud = input (": ")
 			print ("Rotating...")
 			break
 		else:
