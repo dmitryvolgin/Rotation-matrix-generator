@@ -71,11 +71,16 @@ while True:
 		elif choise == "R" or choise == "r":
 			print ("Enter the path to txt file with your point cloud")
 			path = input (": ")
-			print ("Rotating...")
+			print ("Preparing point cloud...")
+
+			with open (path, "r") as initial_cloud:
+				total = sum (1 for line in initial_cloud)
 
 			with open (path, "r") as initial_cloud:
 				with open (path + "_ROTATED.txt", "w") as rotated_cloud:
+					print ("Rotating...")
 					counter = 0
+					print ("0%")
 					for line in initial_cloud:
 						coords = line.split(" ")
 						x = float(coords[0])
@@ -94,7 +99,17 @@ while True:
 						new_line = str('{0:.5f}'.format(x2))+" "+str('{0:.5f}'.format(y2))+" "+str('{0:.5f}'.format(z2))+" "+attribute
 						rotated_cloud.write(new_line)
 						# Loading
-						counter+=1
+						counter += 1
+						loading = counter/total
+						if loading == 0.2:
+							print ("20%")
+						if loading == 0.4:
+							print ("40%")
+						if loading == 0.6:
+							print ("60%")
+						if loading == 0.8:
+							print ("80%")
+
 
 						"""
 						Добавить счёт загрузки
@@ -102,8 +117,9 @@ while True:
 						Выводить 20, 40, 60, 80, 100%
 						"""
 
-			print(str(counter)+" points processed")
+			print ("100%")
 			print("Finished")
+			print(str(counter)+" points processed")
 			break
 		
 		else:
