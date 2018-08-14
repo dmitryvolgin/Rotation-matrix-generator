@@ -110,13 +110,6 @@ while True:
 						if loading == 0.8:
 							print ("80%")
 
-
-						"""
-						Добавить счёт загрузки
-						Сначала надо посчитать количесво строк в файле, а потом вычислить (counter/кол-во строк)
-						Выводить 20, 40, 60, 80, 100%
-						"""
-
 			print ("100%")
 			print("Finished")
 			print(str(counter)+" points processed")
