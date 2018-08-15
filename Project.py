@@ -9,17 +9,17 @@ from decimal import*
 
 print ("Welcome to point cloud rotator.")
 print ("I can make a new text file with coordinates of rotated point cloud or generate file with rotation matrix for CloudCompare.")
-print ("First of all type in Euler angles in degrees and scanner coordinates you are given.")
-
+print ("First of all type in the path to your working directory.")
+working_directory = input("Path: ")
 
 while True:
-	cont = input ("Continue? (Y/N): ")
+	cont = input (f"Continue with {working_directory}? (Y/N): ")
 	if cont == "n" or cont == "N":
 		break
 	elif not cont == "y" and not cont == "Y":
 		print ("Incorrect input!\nType in Y or N")
 		continue
-
+	print ("Type in Euler angles in degrees and scanner coordinates you are given.")
 	alpha = radians (float (input ("Alpha: ")))
 	beta = radians (float (input ("Beta: ")))
 	gamma = radians (float (input ("Gamma: ")))
@@ -54,32 +54,27 @@ while True:
 		if choise == "G" or choise == "g":
 
 			matrix = str(a11)+" "+str(a12)+" "+str(a13)+" "+str(a14)+"\n"+str(a21)+" "+str(a22)+" "+str(a23)+" "+str(a24)+"\n"+str(a31)+" "+str(a32)+" "+str(a33)+" "+str(a34)+"\n"+str(a41)+" "+str(a42)+" "+str(a43)+" "+str(a44)
-			print ("Enter the name for the matrix file.")
+			print ("Enter the name for the matrix file (without extension).")
 			matrix_name = input (": ")
 			print ("Generating...")
 
-			"""
-			Записывает файл в директорию C:/Users/dmitr/(matrix)
-			Исправить!
-			"""
-
-			with open (matrix_name, "w") as matrix_file:
+			with open (working_directory + "\\" + matrix_name + ".txt", "w") as matrix_file:
 				matrix_file.write (matrix)
 				print ("Generation completed!")
 			break
 
 		elif choise == "R" or choise == "r":
-			print ("Enter the path to txt file with your point cloud")
-			path = input (": ")
+			print ("Enter your point cloud file name (with extension)")
+			cloud_file_name = input (": ")
 			print ("Preparing point cloud...")
 
-			with open (path, "r") as initial_cloud:
-				total = sum (1 for line in initial_cloud)
+			with open (working_directory + "\\" + cloud_file_name, "r") as initial_cloud:
+				lines_total = sum (1 for line in initial_cloud)
 
-			with open (path, "r") as initial_cloud:
-				with open (path + "_ROTATED.txt", "w") as rotated_cloud:
+			with open (working_directory + "\\" + cloud_file_name, "r") as initial_cloud:
+				with open (working_directory + "\\" + cloud_file_name + "_ROTATED.txt", "w") as rotated_cloud:
 					print ("Rotating...")
-					counter = 0
+					lines_counter = 0
 					print ("0%")
 					for line in initial_cloud:
 						coords = line.split(" ")
@@ -99,8 +94,8 @@ while True:
 						new_line = str('{0:.5f}'.format(x2))+" "+str('{0:.5f}'.format(y2))+" "+str('{0:.5f}'.format(z2))+" "+attribute
 						rotated_cloud.write(new_line)
 						# Loading
-						counter += 1
-						loading = counter/total
+						lines_counter += 1
+						loading = lines_counter/lines_total
 						if loading == 0.2:
 							print ("20%")
 						if loading == 0.4:
@@ -112,7 +107,7 @@ while True:
 
 			print ("100%")
 			print("Finished")
-			print(str(counter)+" points processed")
+			print(str(lines_counter)+" points processed")
 			break
 		
 		else:
