@@ -1,12 +1,5 @@
 from math import cos , sin , radians
 
-"""
-Исправить полный импорт DECIMAL 
-Он нужен только для ограничения количесва символов после запятой при записи повёрнутого облака в файл
-"""
-
-from decimal import*
-
 print ("Welcome to point cloud rotator.")
 print ("I can make a new text file with coordinates of rotated point cloud or generate file with rotation matrix for CloudCompare.")
 print ("First of all type in the path to your working directory.")
@@ -95,7 +88,7 @@ while True:
 						y2 = y1 + deltaY
 						z2 = z1 + deltaZ
 						# writing
-						new_line = str('{0:.5f}'.format(x2))+" "+str('{0:.5f}'.format(y2))+" "+str('{0:.5f}'.format(z2))+" "+attribute
+						new_line = str(format(x2,'.5f'))+" "+str(format (y2,'.5f'))+" "+str(format (z2,'.5f'))+" "+attribute
 						rotated_cloud.write(new_line)
 						# Loading
 						lines_counter += 1
