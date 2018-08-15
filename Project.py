@@ -78,6 +78,10 @@ while True:
 					print ("0%")
 					for line in initial_cloud:
 						coords = line.split(" ")
+						
+						if not len(coords) == 4:
+							continue
+						
 						x = float(coords[0])
 						y = float(coords[1])
 						z = float(coords[2])
